@@ -3,10 +3,7 @@
 @section('title', 'Login — DTO TOOLS')
 
 @section('right')
-  <div class="brand-row">
-    <div class="brand">DTO-TOOLS</div>
-    <div class="lang-pill">🌐 <span>ID</span></div>
-  </div>
+@include('partials.brand')
 
   <h1>Punten Ser!</h1>
   <p class="sub">Welcome to DTO-TOOLS</p>
@@ -27,7 +24,7 @@
     </div>
     <div class="field with-hint">
       <input type="password" name="password" placeholder="Password" autocomplete="current-password" required>
-      <a class="hint" href="#">Forgot password ?</a>
+      <a class="hint" href="{{ route('password.forgot') }}">Forgot password ?</a>
     </div>
 
     <button class="btn btn-primary" type="submit">Login</button>

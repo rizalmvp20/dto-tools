@@ -14,7 +14,7 @@
   <main class="outer">
     <div class="card">
       {{-- PANEL KIRI (gambar+frame) --}}
-      @include('partials.left-hero')
+      @include('partials.left-hero', ['showActions' => $showActions ?? true])
 
       {{-- PANEL KANAN (diisi halaman masing-masing) --}}
       <section class="right-auth overlap">

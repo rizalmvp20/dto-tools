@@ -1,12 +1,10 @@
 @extends('layouts.auth')
+@php($showActions = false)
 
 @section('title', 'Register — DTO TOOLS')
 
 @section('right')
-  <div class="brand-row">
-    <div class="brand">DTO-TOOLS</div>
-    <div class="lang-pill">🌐 <span>ID</span></div>
-  </div>
+@include('partials.brand')
 
   <h1>Buat Akun</h1>
   <p class="sub">Selamat datang di DTO-TOOLS</p>
@@ -40,16 +38,19 @@
              autocomplete="new-password" required>
     </div>
 
-    <div class="row" style="align-items:center; gap:10px; margin-top:6px;">
-      <label class="remember" style="display:flex;align-items:center;gap:10px;">
-        <input type="checkbox" name="agreement" value="1" {{ old('agreement') ? 'checked' : '' }} required>
-        <span>Siap menegakkan solat 5 waktu</span>
-      </label>
-      @error('agreement')<div style="color:#ef4444;font-size:12px;">{{ $message }}</div>@enderror
-      <span style="flex:1"></span>
-      <a class="a" href="{{ route('login.show') }}">Sudah punya akun? Login</a>
+    <div class="agree-row">
+      <input id="agreement" type="checkbox" name="agreement" value="1" required {{ old('agreement') ? 'checked' : '' }}>
+      <label for="agreement">Siap menegakkan solat 5 waktu</label>
     </div>
+    @error('agreement')
+      <div class="field-error">{{ $message }}</div>
+    @enderror
 
     <button class="btn btn-primary" type="submit" style="margin-top:16px;">Daftar</button>
+
+    <div class="foot">
+        Sudah punya akun?
+        <a href="{{ route('login.show') }}">Login</a>
+    </div>
   </form>
 @endsection
