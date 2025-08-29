@@ -6,57 +6,88 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-slate-900 text-white flex flex-col">
             <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
-                <span class="font-bold text-lg">DTO-TOOLS</span>
+                <span class="font-bold text-lg">DTO‑TOOLS</span>
             </div>
+
             <nav class="flex-1 px-4 py-6 space-y-2 text-sm">
+                {{-- Home --}}
                 <a href="{{ route('dashboard') }}"
-                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->routeIs('dashboard') ? 'bg-slate-800' : '' }}">
-                    <i class="fa-solid fa-house w-5"></i><span>Home</span>
+                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->routeIs('dashboard') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                    <i class="fa-solid fa-house w-5 h-5"></i>
+                    <span>Home</span>
                 </a>
-                @if (auth()->user()->is_admin)
+
+                {{-- User Approvals (admin only) --}}
+                @if (auth()->user()?->is_admin)
                     <a href="{{ route('admin.users') }}"
-                        class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->routeIs('admin.users') ? 'bg-slate-800' : '' }}">
-                        <i class="fa-solid fa-users w-5"></i><span>User Approvals</span>
+                        class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->routeIs('admin.users') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                        <i class="fa-solid fa-users w-5 h-5"></i>
+                        <span>User Approvals</span>
                     </a>
                 @endif
+
+                {{-- Editors --}}
                 <a href="{{ url('/app/smart-card') }}"
-                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('app/smart-card*') ? 'bg-slate-800' : '' }}">
-                    <i class="fa-solid fa-layer-group w-5"></i><span>Smart Card</span>
+                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('app/smart-card*') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                    <i class="fa-solid fa-layer-group w-5 h-5"></i>
+                    <span>Smart Card</span>
                 </a>
-                {{-- tambahkan item lain dengan pola serupa --}}
+                <a href="{{ url('/app/dashboard-menu') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('app/dashboard-menu*') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                    <i class="fa-solid fa-bars w-5 h-5"></i>
+                    <span>Dashboard Menu</span>
+                </a>
+                <a href="{{ url('/app/embedded-url') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('app/embedded-url*') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                    <i class="fa-solid fa-link w-5 h-5"></i>
+                    <span>Embedded URL</span>
+                </a>
+                <a href="{{ url('/app/payment-method') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('app/payment-method*') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                    <i class="fa-solid fa-credit-card w-5 h-5"></i>
+                    <span>Payment Method</span>
+                </a>
+
+                {{-- Lainnya --}}
                 <a href="{{ url('/support') }}"
-                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('support*') ? 'bg-slate-800' : '' }}">
-                    <i class="fa-solid fa-circle-question w-5"></i><span>Support</span>
+                    class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->is('support*') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
+                    <i class="fa-solid fa-circle-question w-5 h-5"></i>
+                    <span>Support</span>
                 </a>
-                <form method="POST" action="{{ route('logout') }}">
+
+                {{-- Logout --}}
+                <form method="POST" action="{{ route('logout') }}" class="flex">
                     @csrf
                     <button type="submit" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-                        <i class="fa-solid fa-arrow-right-from-bracket w-5"></i><span>Logout</span>
+                        <i class="fa-solid fa-arrow-right-from-bracket w-5 h-5"></i>
+                        <span>Logout</span>
                     </button>
                 </form>
             </nav>
         </aside>
 
+
         <!-- Main content -->
         <div class="flex-1 flex flex-col">
-            <!-- Topbar -->
+            {{-- Topbar --}}
             <header class="flex justify-between items-center px-6 py-4 bg-white border-b">
                 <div class="flex items-center w-1/3">
-                    <x-heroicon-o-magnifying-glass class="w-5 h-5 text-gray-500 mr-2" />
+                    <i class="fa-solid fa-magnifying-glass w-5 h-5 text-gray-500 mr-2"></i>
                     <input type="text" placeholder="Search pages, editors..."
                         class="w-full border border-gray-200 rounded-md px-3 py-1.5 focus:ring focus:ring-indigo-200 focus:border-indigo-400">
                 </div>
                 <div class="flex items-center gap-5">
                     <button class="relative">
-                        <x-heroicon-o-bell class="w-6 h-6 text-gray-600" />
+                        <i class="fa-solid fa-bell w-6 h-6 text-gray-600"></i>
                         <span class="absolute top-0 right-0 block w-2 h-2 bg-red-500 rounded-full"></span>
                     </button>
                     <div class="flex items-center gap-2">
                         <img src="https://i.pravatar.cc/40" alt="profile" class="w-8 h-8 rounded-full">
-                        <span class="text-sm text-gray-700">Admin</span>
+                        <span class="text-sm text-gray-700">{{ auth()->user()->username ?? 'Admin' }}</span>
                     </div>
                 </div>
             </header>
+
 
             <!-- Content -->
             <main class="p-6 flex-1 overflow-y-auto">
