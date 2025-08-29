@@ -11,7 +11,7 @@
     </button>
     <div class="flex items-center gap-2">
       <img src="https://i.pravatar.cc/40" alt="profile" class="w-8 h-8 rounded-full">
-      <span class="text-sm text-gray-700">{{ auth()->user()->username ?? 'admin' }}</span>
+      <span class="text-sm text-gray-700">{{ auth()->user()->username ?? 'user' }}</span>
     </div>
   </div>
 </header>

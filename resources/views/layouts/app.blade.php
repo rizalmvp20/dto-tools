@@ -7,7 +7,7 @@
 
   <title>{{ $title ?? 'DTO-TOOLS' }}</title>
 
-  {{-- Vite assets (kalau kamu pakai) --}}
+  {{-- Vite assets (pastikan npm run dev/jit jalan) --}}
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   {{-- Font Awesome (ikon) --}}
@@ -15,8 +15,6 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfUco8S3vfsa+4r0u8L4CkzjXQ0C5X3Qol0QfZ7T4O2H5mC8mZ8wSx9A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-  {{-- Tailwind/utility default body font dsb terserah dari app.css kamu --}}
 </head>
 <body class="antialiased text-slate-800 bg-gray-50">
   @yield('content')
