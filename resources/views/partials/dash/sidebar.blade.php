@@ -1,96 +1,74 @@
-<aside class="sidebar w-64 bg-slate-900 text-white flex flex-col">
-  {{-- Header --}}
-  <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
-    <a href="{{ route('dashboard') }}" class="font-bold text-lg tracking-wide">DTO-TOOLS</a>
-    <button type="button" class="text-slate-300 hover:text-white" title="Collapse sidebar" data-toggle-sidebar>
-      <i class="fa-solid fa-angles-left chev"></i>
-    </button>
-  </div>
+<aside class="side" id="side">
+    {{-- Header logo & toggle --}}
+    <div class="side-head">
+        <button class="side-toggle" id="sideToggle" title="Toggle sidebar">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+                <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    fill="none" />
+            </svg>
+        </button>
+        <div class="brand">
+            <span class="logo-dot"></span>
+            <span class="brand-text">DTO‑TOOLS</span>
+        </div>
+    </div>
 
-  @php
-    // active helper: cocokkan route name atau path
-    $is = function(array $rules) {
-      foreach ($rules as $r) {
-        if (request()->routeIs($r) || request()->is($r)) return true;
-      }
-      return false;
-    };
-    // class item menu (aktif vs tidak)
-    function itemClass($active) {
-      return 'item group flex items-center gap-3 px-3 py-2 rounded-md transition '
-           . ($active
-              ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500'
-              : 'text-slate-300 hover:text-white hover:bg-slate-800');
-    }
-  @endphp
+    <nav class="side-nav">
+        {{-- Home --}}
+        <a href="{{ route('dashboard') }}"
+            class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <span class="ico"><i class="fa-solid fa-house"></i></span>
+            <span class="tx">Home</span>
+        </a>
 
-  <nav class="flex-1 px-4 py-6 space-y-2 text-sm">
-    {{-- Home --}}
-    @php $active = $is(['dashboard', '/', 'home', 'dashboard*']); @endphp
-    <a href="{{ route('dashboard') }}"
-       class="{{ itemClass($active) }}" title="Home">
-      <i class="fa-solid fa-house w-5 text-base"></i>
-      <span class="label">Home</span>
-    </a>
+        {{-- Admin --}}
+        @if (auth()->user()->is_admin)
+            <div class="nav-label">Admin</div>
+            <a href="{{ route('admin.users') }}"
+                class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                <span class="ico"><i class="fa-solid fa-users"></i></span>
+                <span class="tx">User Approvals</span>
+            </a>
+        @endif
 
-    {{-- Admin --}}
-    @if(auth()->user()?->is_admin)
-      <div class="mt-4 mb-1 uppercase tracking-wider text-[11px] text-slate-400 label">Admin</div>
-      @php $active = $is(['admin.users*','admin/users*']); @endphp
-      <a href="{{ (Route::has('admin.users') ? route('admin.users') : url('/admin/users')) }}"
-         class="{{ itemClass($active) }}" title="User Approvals">
-        <i class="fa-solid fa-users-gear w-5 text-base"></i>
-        <span class="label">User Approvals</span>
-      </a>
-    @endif
+        {{-- Editors --}}
+        <div class="nav-label">Editors</div>
+        <a href="{{ url('/app/smart-card') }}"
+            class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->is('app/smart-card*') ? 'active' : '' }}">
+            <span class="ico"><i class="fa-solid fa-layer-group"></i></span>
+            <span class="tx">Smart Card</span>
+        </a>
+        <a href="{{ url('/app/dashboard-menu') }}"
+            class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->is('app/dashboard-menu*') ? 'active' : '' }}">
+            <span class="ico"><i class="fa-solid fa-bars"></i></span>
+            <span class="tx">Dashboard Menu</span>
+        </a>
+        <a href="{{ url('/app/embedded-url') }}"
+            class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->is('app/embedded-url*') ? 'active' : '' }}">
+            <span class="ico"><i class="fa-solid fa-link"></i></span>
+            <span class="tx">Embedded URL</span>
+        </a>
+        <a href="{{ url('/app/payment-method') }}"
+            class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->is('app/payment-method*') ? 'active' : '' }}">
+            <span class="ico"><i class="fa-solid fa-credit-card"></i></span>
+            <span class="tx">Payment Method</span>
+        </a>
 
-    {{-- Editors --}}
-    <div class="mt-4 mb-1 uppercase tracking-wider text-[11px] text-slate-400 label">Editors</div>
+        {{-- Lainnya --}}
+        <div class="nav-label">Lainnya</div>
+        <a href="{{ url('/support') }}"
+            class="nav-item flex items-center gap-3 px-3 py-2 rounded-md transition {{ request()->is('support*') ? 'active' : '' }}">
+            <span class="ico"><i class="fa-solid fa-circle-question"></i></span>
+            <span class="tx">Support</span>
+        </a>
 
-    @php $active = $is(['editors.smartcard*','smartcard*']); @endphp
-    <a href="{{ Route::has('editors.smartcard') ? route('editors.smartcard') : url('/editors/smartcard') }}"
-       class="{{ itemClass($active) }}" title="Smart Card">
-      <i class="fa-solid fa-id-card-clip w-5 text-base"></i>
-      <span class="label">Smart Card</span>
-    </a>
-
-    @php $active = $is(['editors.menu*','dashboard-menu*','menu*']); @endphp
-    <a href="{{ Route::has('editors.menu') ? route('editors.menu') : url('/editors/menu') }}"
-       class="{{ itemClass($active) }}" title="Dashboard Menu">
-      <i class="fa-solid fa-table-cells-large w-5 text-base"></i>
-      <span class="label">Dashboard Menu</span>
-    </a>
-
-    @php $active = $is(['editors.embedded*','embedded*']); @endphp
-    <a href="{{ Route::has('editors.embedded') ? route('editors.embedded') : url('/editors/embedded-url') }}"
-       class="{{ itemClass($active) }}" title="Embedded URL">
-      <i class="fa-solid fa-link w-5 text-base"></i>
-      <span class="label">Embedded URL</span>
-    </a>
-
-    @php $active = $is(['editors.payment*','payment*']); @endphp
-    <a href="{{ Route::has('editors.payment') ? route('editors.payment') : url('/editors/payment-method') }}"
-       class="{{ itemClass($active) }}" title="Payment Method">
-      <i class="fa-solid fa-credit-card w-5 text-base"></i>
-      <span class="label">Payment Method</span>
-    </a>
-
-    {{-- Lainnya --}}
-    <div class="mt-4 mb-1 uppercase tracking-wider text-[11px] text-slate-400 label">Lainnya</div>
-
-    @php $active = $is(['support*']); @endphp
-    <a href="{{ Route::has('support') ? route('support') : url('/support') }}"
-       class="{{ itemClass($active) }}" title="Support">
-      <i class="fa-regular fa-circle-question w-5 text-base"></i>
-      <span class="label">Support</span>
-    </a>
-
-    <form action="{{ Route::has('logout') ? route('logout') : url('/logout') }}" method="POST" class="mt-1">
-      @csrf
-      <button type="submit" class="w-full text-left {{ itemClass(false) }}" title="Logout">
-        <i class="fa-solid fa-right-from-bracket w-5 text-base"></i>
-        <span class="label">Logout</span>
-      </button>
-    </form>
-  </nav>
+        {{-- Logout --}}
+        <form method="POST" action="{{ route('logout') }}" class="nav-item as-form">
+            @csrf
+            <button type="submit" class="flex items-center gap-3 px-3 py-2 rounded-md">
+                <span class="ico"><i class="fa-solid fa-arrow-right-from-bracket"></i></span>
+                <span class="tx">Logout</span>
+            </button>
+        </form>
+    </nav>
 </aside>
