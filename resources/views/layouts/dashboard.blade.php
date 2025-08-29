@@ -22,7 +22,7 @@
                     <a href="{{ route('admin.users') }}"
                         class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800 {{ request()->routeIs('admin.users') ? 'bg-slate-800 text-indigo-300 border-l-4 border-indigo-500' : '' }}">
                         <i class="fa-solid fa-users w-5 h-5"></i>
-                        <span>User Approvals</span>
+                        <span>User Approvals</span>
                     </a>
                 @endif
 
