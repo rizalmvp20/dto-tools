@@ -9,3 +9,14 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* === Sidebar collapse behavior === */
+.sidebar { width: 16rem; transition: width .2s ease; }
+.sidebar * { transition: all .2s ease; }
+
+.sidebar .label { opacity: 1; visibility: visible; }
+body.sidebar-collapsed .sidebar { width: 4.5rem; }         /* ~72px */
+body.sidebar-collapsed .sidebar .label { opacity: 0; visibility: hidden; width: 0; }
+body.sidebar-collapsed .sidebar .item { justify-content: center; gap: .5rem; }
+body.sidebar-collapsed .sidebar .chev { transform: rotate(180deg); }
+
