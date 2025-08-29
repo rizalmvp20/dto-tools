@@ -2,79 +2,14 @@
 
 @section('content')
 <div class="flex h-screen bg-gray-50">
+  @include('partials.dash.sidebar')
 
-  <!-- Sidebar -->
-  <aside class="w-64 bg-slate-900 text-white flex flex-col">
-    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-700">
-      <span class="font-bold text-lg">DTO-TOOLS</span>
-    </div>
-
-    <nav class="flex-1 px-4 py-6 space-y-2 text-sm">
-      <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-solid fa-house w-5 h-5"></i> <span>Home</span>
-      </a>
-
-      @if(auth()->user()->is_admin ?? false)
-      <div class="mt-4 mb-1 uppercase tracking-wider text-[11px] text-slate-400">Admin</div>
-      <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-solid fa-users w-5 h-5"></i> <span>User Approvals</span>
-      </a>
-      @endif
-
-      <div class="mt-4 mb-1 uppercase tracking-wider text-[11px] text-slate-400">Editors</div>
-      <a href="{{ url('/app/smart-card') }}" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-solid fa-layer-group w-5 h-5"></i> <span>Smart Card</span>
-      </a>
-      <a href="{{ url('/app/dashboard-menu') }}" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-solid fa-bars-progress w-5 h-5"></i> <span>Dashboard Menu</span>
-      </a>
-      <a href="{{ url('/app/embedded-url') }}" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-solid fa-link w-5 h-5"></i> <span>Embedded URL</span>
-      </a>
-      <a href="{{ url('/app/payment-method') }}" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-solid fa-credit-card w-5 h-5"></i> <span>Payment Method</span>
-      </a>
-
-      <div class="mt-4 mb-1 uppercase tracking-wider text-[11px] text-slate-400">Lainnya</div>
-      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-        <i class="fa-regular fa-circle-question w-5 h-5"></i> <span>Support</span>
-      </a>
-
-      <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-800">
-          <i class="fa-solid fa-right-from-bracket w-5 h-5"></i> <span>Logout</span>
-        </button>
-      </form>
-    </nav>
-  </aside>
-
-  <!-- Main content -->
   <div class="flex-1 flex flex-col">
-    <!-- Topbar -->
-    <header class="flex justify-between items-center px-6 py-4 bg-white border-b">
-      <div class="flex items-center w-full max-w-md">
-        <i class="fa-solid fa-magnifying-glass text-gray-500 mr-2"></i>
-        <input type="text" placeholder="Search pages, editors..."
-               class="w-full border border-gray-200 rounded-md px-3 py-1.5 focus:ring focus:ring-indigo-200 focus:border-indigo-400">
-      </div>
-      <div class="flex items-center gap-5">
-        <button class="relative">
-          <i class="fa-regular fa-bell w-6 h-6 text-gray-600"></i>
-          <span class="absolute -top-0.5 -right-0.5 block w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
-        <div class="flex items-center gap-2">
-          <img src="https://i.pravatar.cc/40" alt="profile" class="w-8 h-8 rounded-full">
-          <span class="text-sm text-gray-700">{{ auth()->user()->username ?? 'admin' }}</span>
-        </div>
-      </div>
-    </header>
+    @include('partials.dash.topbar')
 
-    <!-- Content -->
     <main class="p-6 flex-1 overflow-y-auto">
       <h1 class="text-2xl font-bold mb-4">My Bookings</h1>
 
-      <!-- Chart placeholder -->
       <div class="bg-white rounded-lg shadow p-6 mb-6">
         <div class="flex items-center justify-between mb-2">
           <h2 class="text-lg font-semibold">Period Overview</h2>
@@ -87,7 +22,6 @@
         </div>
       </div>
 
-      <!-- Arriving today -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white rounded-lg shadow p-6">
           <h2 class="text-lg font-semibold mb-3">Arriving today</h2>
