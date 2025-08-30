@@ -14,7 +14,7 @@
 <aside id="sidebar">
     <div class="brand">
         <span class="logo"><i class="bi bi-lightning-charge-fill"></i></span>
-        <span class="brand-text">{{ config('app.name', 'Accusoft') }}</span>
+        <span class="brand-text">{{ config('app.name', 'DTO Tools') }}</span>
     </div>
 
     <nav class="mt-3">

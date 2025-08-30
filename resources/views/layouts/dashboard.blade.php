@@ -4,7 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ trim($__env->yieldContent('page_title')) ?: $title ?? 'Dashboard' }}</title>
+    <title>
+        @hasSection('page_title')
+            @yield('page_title') - {{ config('app.name') }}
+        @else
+            {{ config('navigation.titles')[\Illuminate\Support\Facades\Route::currentRouteName()] ?? 'Dashboard' }}
+            - {{ config('app.name') }}
+        @endif
+    </title>
 
     {{-- Asset utama + CSS/JS dashboard + entry page (opsional via stack) --}}
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/dashboard.css', 'resources/js/dashboard.js'])
