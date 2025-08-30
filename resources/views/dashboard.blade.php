@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Dashboard' }}</title>
 
-    {{-- Memuat CSS/JS yang dibangun oleh Vite. Bootstrap akan masuk di sini karena diimpor di app.js --}}
+    {{-- Memuat CSS/JS yang dibangun oleh Vite. Bootstrap dimasukkan melalui app.js --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -48,7 +48,7 @@
                     class="list-group-item list-group-item-action {{ request()->is('admin/users*') ? 'active' : '' }}">
                     <i class="fa-solid fa-users me-2"></i> User Approvals
                 </a>
-                {{-- Menu perencanaan --}}
+                {{-- Menu perencanaan (nonaktif sementara) --}}
                 <a href="#" class="list-group-item list-group-item-action disabled">
                     <i class="fa-solid fa-file-code me-2"></i> JSON Editor
                 </a>
@@ -92,9 +92,7 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form2').submit();">
-                                        Logout
-                                    </a>
+                                        onclick="event.preventDefault(); document.getElementById('logout-form2').submit();">Logout</a>
                                     <form id="logout-form2" action="{{ route('logout') }}" method="POST"
                                         style="display:none;">
                                         @csrf
@@ -113,7 +111,7 @@
         </div>
     </div>
 
-    {{-- Script untuk toggle sidebar --}}
+    {{-- Script toggle sidebar --}}
     <script>
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             document.getElementById('sidebar-wrapper').classList.toggle('toggled');
