@@ -1,12 +1,12 @@
 /*
- * Load JavaScript dependencies untuk aplikasi Anda.
- * File ini akan dibundel oleh Vite dan secara otomatis memuat Bootstrap.
+ * Entry Vite. Bootstrap & Icons dimuat TANPA CDN.
+ * Custom style ada di resources/css/*.css (dipanggil dari blade).
  */
 
-import "./bootstrap";
+try {
+    import("./bootstrap");
+} catch (e) {}
 
-// Impor CSS Bootstrap. Ini akan memasukkan file CSS ke bundle akhir
 import "bootstrap/dist/css/bootstrap.min.css";
-
-// Impor bundle JS Bootstrap (termasuk Popper)
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap-icons/font/bootstrap-icons.css";

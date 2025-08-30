@@ -1,0 +1,153 @@
+:root {
+    --sidebar-width: 260px;
+    --sidebar-width-collapsed: 72px;
+    --brand-bg: #e91e63;
+}
+
+body {
+    background-color: #f5f7fb;
+}
+
+#wrapper {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Sidebar */
+#sidebar {
+    width: var(--sidebar-width);
+    transition: width 0.25s ease;
+    background: #fff;
+    border-right: 1px solid #eaecef;
+}
+#sidebar .brand {
+    background: var(--brand-bg);
+    color: #fff;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+#sidebar .brand .logo {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff1f5;
+    color: #d81b60;
+    margin-right: 10px;
+}
+#sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin: 6px 10px;
+    color: #334155;
+}
+#sidebar .nav-link:hover {
+    background: #f3f4f6;
+}
+#sidebar .nav-link.active {
+    background: #ffe3ec;
+    color: #d81b60;
+    font-weight: 600;
+}
+#sidebar .nav-icon {
+    font-size: 1.1rem;
+    width: 22px;
+    text-align: center;
+}
+#sidebar .nav-label {
+    white-space: nowrap;
+}
+
+/* Collapsed */
+.sidebar-collapsed #sidebar {
+    width: var(--sidebar-width-collapsed);
+}
+.sidebar-collapsed #sidebar .nav-label,
+.sidebar-collapsed #sidebar .brand .brand-text {
+    display: none;
+}
+.sidebar-collapsed #sidebar .brand {
+    justify-content: center;
+}
+.sidebar-collapsed #sidebar .logo {
+    margin-right: 0;
+}
+
+/* Topbar */
+#topbar {
+    height: 64px;
+    background: #fff;
+    border-bottom: 1px solid #eaecef;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+}
+#topbar .search-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+#topbar .search-box {
+    width: min(640px, 100%);
+}
+
+/* Konten */
+#content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.container-body {
+    padding: 24px;
+}
+
+/* KPI cards */
+.kpi-card .bi {
+    font-size: 1.6rem;
+    opacity: 0.65;
+}
+.kpi-card h2 {
+    font-weight: 800;
+    margin: 0;
+}
+.kpi-card small {
+    color: #64748b;
+}
+
+/* Badge status tabel */
+.badge-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot-purple {
+    background: #8b5cf6;
+}
+.dot-orange {
+    background: #fb923c;
+}
+.dot-pink {
+    background: #ec4899;
+}
+.dot-blue {
+    background: #3b82f6;
+}
+.dot-gray {
+    background: #94a3b8;
+}

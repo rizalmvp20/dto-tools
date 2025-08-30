@@ -40,3 +40,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/users/{user}/reset-password', [PasswordController::class, 'adminReset'])
         ->name('admin.users.reset_password');
 });
+
+Route::middleware(['auth', 'approved'])->group(function () {
+    Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+
+    // dummy pages untuk menu
+    Route::view('/customers', 'dashboard.stub')->name('customers.index');
+    Route::view('/projects', 'dashboard.stub')->name('projects.index');
+    Route::view('/orders', 'dashboard.stub')->name('orders.index');
+    Route::view('/inventory', 'dashboard.stub')->name('inventory.index');
+    Route::view('/accounts', 'dashboard.stub')->name('accounts.index');
+    Route::view('/tasks', 'dashboard.stub')->name('tasks.index');
+
+    Route::view('/profile', 'dashboard.stub')->name('profile'); // sementara
+});
