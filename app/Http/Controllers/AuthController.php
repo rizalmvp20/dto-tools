@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash; // optional kalau mau ganti bcrypt() -> Hash::make()
 
 class AuthController extends Controller
 {
     // === HALAMAN LOGIN & REGISTER ===
     public function showLogin()
     {
-        // Pakai facade biar IDE senang
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }
@@ -35,7 +33,7 @@ class AuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        // cek user approved dulu
+        // Pastikan user ada & sudah di-approve
         $user = User::where('username', $credentials['username'])->first();
         if (!$user) {
             return back()->withErrors(['username' => 'Username tidak ditemukan.'])->withInput();
@@ -44,12 +42,16 @@ class AuthController extends Controller
             return back()->withErrors(['username' => 'Akun belum di-approve admin.'])->withInput();
         }
 
-        // Hindari garis merah pada boolean()
-        $remember = (bool) $request->input('remember');
+        $remember = (bool) $request->input('remember', false);
 
         if (Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate(); // penting untuk keamanan sesi
-            return redirect()->intended('/dashboard');
+            // Amankan sesi
+            $request->session()->regenerate();
+
+            // Paksa SELALU ke dashboard (jangan pakai intended)
+            $request->session()->forget('url.intended');
+
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors(['password' => 'Password salah.'])->withInput();
@@ -68,8 +70,6 @@ class AuthController extends Controller
 
         User::create([
             'username'    => $data['username'],
-            // bcrypt() oke; kalau mau ganti:
-            // 'password' => Hash::make($data['password']),
             'password'    => bcrypt($data['password']),
             'is_admin'    => false,
             'is_approved' => false,
@@ -82,8 +82,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate();     // hapus sesi lama
-        $request->session()->regenerateToken(); // ganti CSRF token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect()->route('login.show');
     }

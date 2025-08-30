@@ -1,16 +1,3 @@
-@php
-    // Helper sederhana untuk status "active" di menu
-    function is_active($patterns)
-    {
-        foreach ((array) $patterns as $p) {
-            if (request()->routeIs($p)) {
-                return 'active';
-            }
-        }
-        return '';
-    }
-@endphp
-
 <aside id="sidebar">
     <div class="brand">
         <span class="logo"><i class="bi bi-lightning-charge-fill"></i></span>
@@ -18,39 +5,38 @@
     </div>
 
     <nav class="mt-3">
-        <a href="{{ route('dashboard') }}" class="nav-link {{ is_active('dashboard') }}">
-            <i class="nav-icon bi bi-speedometer2"></i>
-            <span class="nav-label">Dashboard</span>
-        </a>
+        @if (auth()->user()->is_admin)
+            {{-- ADMIN: Dashboard collapsible --}}
+            <a href="javascript:void(0)"
+                class="nav-link d-flex align-items-center gap-2 {{ request()->routeIs(['dashboard', 'admin.users']) ? 'active' : '' }}"
+                data-nav-toggle data-target="#navDashboard"
+                aria-expanded="{{ request()->routeIs(['dashboard', 'admin.users']) ? 'true' : 'false' }}"
+                aria-controls="navDashboard">
+                <i class="nav-icon bi bi-speedometer2"></i>
+                <span class="nav-label flex-grow-1 text-start">Dashboard</span>
+                <i class="bi bi-caret-down ms-auto"></i>
+            </a>
 
-        <a href="{{ route('customers.index') }}" class="nav-link {{ is_active('customers.*') }}">
-            <i class="nav-icon bi bi-people"></i>
-            <span class="nav-label">Customers</span>
-        </a>
+            <div class="nav-collapse {{ request()->routeIs(['dashboard', 'admin.users']) ? 'show' : '' }}"
+                id="navDashboard">
+                <a href="{{ route('dashboard') }}"
+                    class="nav-link ps-5 {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <i class="nav-icon bi bi-house"></i>
+                    <span class="nav-label">Overview</span>
+                </a>
 
-        <a href="{{ route('projects.index') }}" class="nav-link {{ is_active('projects.*') }}">
-            <i class="nav-icon bi bi-kanban"></i>
-            <span class="nav-label">Projects</span>
-        </a>
-
-        <a href="{{ route('orders.index') }}" class="nav-link {{ is_active('orders.*') }}">
-            <i class="nav-icon bi bi-bag-check"></i>
-            <span class="nav-label">Orders</span>
-        </a>
-
-        <a href="{{ route('inventory.index') }}" class="nav-link {{ is_active('inventory.*') }}">
-            <i class="nav-icon bi bi-box-seam"></i>
-            <span class="nav-label">Inventory</span>
-        </a>
-
-        <a href="{{ route('accounts.index') }}" class="nav-link {{ is_active('accounts.*') }}">
-            <i class="nav-icon bi bi-wallet2"></i>
-            <span class="nav-label">Accounts</span>
-        </a>
-
-        <a href="{{ route('tasks.index') }}" class="nav-link {{ is_active('tasks.*') }}">
-            <i class="nav-icon bi bi-check2-square"></i>
-            <span class="nav-label">Tasks</span>
-        </a>
+                <a href="{{ route('admin.users', ['status' => 'pending']) }}"
+                    class="nav-link ps-5 {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                    <i class="nav-icon bi bi-hourglass-split"></i>
+                    <span class="nav-label">User Management</span>
+                </a>
+            </div>
+        @else
+            {{-- USER BIASA: hanya link dashboard --}}
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <i class="nav-icon bi bi-speedometer2"></i>
+                <span class="nav-label">Dashboard</span>
+            </a>
+        @endif
     </nav>
 </aside>

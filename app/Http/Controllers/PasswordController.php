@@ -24,8 +24,8 @@ class PasswordController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'current_password'      => ['required','string'],
-            'password'              => ['required','string','min:6','confirmed'],
+            'current_password'      => ['required', 'string'],
+            'password'              => ['required', 'string', 'min:6', 'confirmed'],
         ]);
 
         $user = $request->user();
@@ -43,13 +43,19 @@ class PasswordController extends Controller
     // ADMIN: Reset password user (set random/temporary)
     public function adminReset(Request $request, User $user)
     {
-        $this->authorize('update', $user); // optional kalau pakai policy
+        // kalau tidak pakai Policy, kamu bisa hapus baris authorize di bawah
+        // $this->authorize('update', $user);
 
-        $new = Str::random(8); // atau set ke default tertentu
-        $user->password = $new; // auto-hash via mutator
+        // cegah reset untuk akun admin
+        if ($user->is_admin) {
+            return back()->with('error', 'Tidak boleh reset password admin.');
+        }
+
+        $new = Str::random(10);          // password baru sementara
+        $user->password = $new;          // auto-hash via mutator di model User
         $user->save();
 
-        // TODO: tampilkan ke admin agar bisa diinformasikan ke user
-        return back()->with('status', "Password user '{$user->username}' direset ke: {$new}");
+        // tampilkan ke admin; di produksi sebaiknya kirim via email/WA/kanal aman
+        return back()->with('success', "Password user '{$user->username}' direset ke: {$new}");
     }
 }
